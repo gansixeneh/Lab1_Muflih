@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block meta %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+{% endblock meta %}
+
+{% block content %}
+
+<nav class="navbar navbar-expand-lg navbar-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Wishlist</a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-mdb-toggle="collapse"
+      data-mdb-target="#navbarNav"
+      aria-controls="navbarNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <i class="fas fa-bars"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active">{{nama}}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'wishlist:logout' %}">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<br><br>
+
+<table class="table table-bordered table-striped container table-hover text-center" style="border-color:gray">
+    <tr class="row">
+        <td class="col text-white bg-black">Nama Barang</td>
+        <td class="col text-white bg-black">Harga Barang</td>
+        <td class="col text-white bg-black">Deskripsi</td>
+    </tr>
+    <div id="myData"></div>
+    <script>
+      fetch('http://localhost:8000/wishlist/json/')
+      .then(function (response) {
+        return response.json();
+      })
+      .then(function (data) {
+        appendData(data);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+      function appendData(data) {
+        var mainContainer = document.getElementById("myData");
+        for (var i = 0; i < data.length; i++) {
+          var div = document.createElement("div");
+          div.innerHTML = 'Name: ' + data[i].fields.nama_barang + ' ' + data[i].fields.harga_barang +' '+data[i].fields.deskripsi;
+          mainContainer.appendChild(div);
+        }
+      }
+    </script>
+</table>
+<br>
+<p class="text-secondary text-center">Sesi terakhir login: {{ last_login }}</p>
+
+{% endblock content %}
