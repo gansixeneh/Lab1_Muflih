@@ -41,28 +41,29 @@
         <td class="col text-white bg-black">Harga Barang</td>
         <td class="col text-white bg-black">Deskripsi</td>
     </tr>
-    <div id="myData"></div>
-    <script>
-      fetch('http://localhost:8000/wishlist/json/')
-      .then(function (response) {
-        return response.json();
-      })
-      .then(function (data) {
-        appendData(data);
-      })
-      .catch(function (err) {
-        console.log(err);
-      });
-      function appendData(data) {
-        var mainContainer = document.getElementById("myData");
-        for (var i = 0; i < data.length; i++) {
-          var div = document.createElement("div");
-          div.innerHTML = 'Name: ' + data[i].fields.nama_barang + ' ' + data[i].fields.harga_barang +' '+data[i].fields.deskripsi;
-          mainContainer.appendChild(div);
-        }
-      }
-    </script>
 </table>
+
+<div id="myData"></div>
+<script>
+  fetch('http://localhost:8000/wishlist/json/')
+  .then(function (response) {
+    return response.json();
+  })
+  .then(function (data) {
+    appendData(data);
+  })
+  .catch(function (err) {
+    console.log(err);
+  });
+  function appendData(data) {
+    var mainContainer = document.getElementById("myData");
+    for (var i = 0; i < data.length; i++) {
+      var div = document.createElement("div");
+      div.innerHTML = 'Name: ' + data[i].fields.nama_barang + ' ' + data[i].fields.harga_barang +' '+data[i].fields.deskripsi;
+      mainContainer.appendChild(div);
+    }
+  }
+</script>
 <br>
 <p class="text-secondary text-center">Sesi terakhir login: {{ last_login }}</p>
 
